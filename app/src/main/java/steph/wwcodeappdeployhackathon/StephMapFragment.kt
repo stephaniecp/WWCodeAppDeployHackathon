@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.util.Log // Added for troubleshooting error
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.MarkerOptions
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,7 +40,31 @@ class StephMapFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         Log.d("stephTag", "Starting onCreateView")
-        return inflater.inflate(R.layout.fragment_steph_map, container, false)
+        val view = inflater.inflate(R.layout.fragment_steph_map, container, false)
+
+        val supportMapFragment =
+            childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+
+        // Async map
+        supportMapFragment!!.getMapAsync { googleMap ->
+            // When map is loaded
+            googleMap.setOnMapClickListener { latLng -> // When clicked on map
+                // Initialize marker options
+                val markerOptions = MarkerOptions()
+                // Set position of marker
+                markerOptions.position(latLng)
+                // Set title of marker
+                markerOptions.title("Hi: " + latLng.latitude.toString() + " : " + latLng.longitude)
+                // Remove all marker
+                googleMap.clear()
+                // Animating to zoom the marker
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
+                // Add marker on map
+                googleMap.addMarker(markerOptions)
+            }
+        }
+
+        return view
     }
 
     companion object {
