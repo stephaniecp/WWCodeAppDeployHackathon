@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.libraries.places.api.Places
 import steph.wwcodeappdeployhackathon.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +43,13 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Initialize the SDK
+        Places.initializeWithNewPlacesApiEnabled(applicationContext, "${BuildConfig.MAPS_API_KEY}")
+
+        // Create a new PlacesClient instance
+        val placesClient = Places.createClient(this)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

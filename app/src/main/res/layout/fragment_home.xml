@@ -21,16 +21,32 @@
             android:textAlignment="center"
             android:textSize="20sp" />
 
-        <TextView
+<!--    SCP - Optional text field. Commenting out as won't need for the moment.-->
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Hello, from fragment_home! V1" />-->
+
+<!--    SCP - Attempt at initialising Places API using Google tutorial: -->
+<!--    https://developers.google.com/maps/documentation/places/android-sdk/autocomplete-->
+        <fragment android:id="@+id/autocomplete_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello, from fragment_home! V1" />
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
 
-        <fragment
-            android:id="@+id/does_it_matter"
-            class="steph.wwcodeappdeployhackathon.StephMapFragment"
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
+
+<!--        <fragment-->
+<!--            android:id="@+id/does_it_matter"-->
+<!--            class="steph.wwcodeappdeployhackathon.StephMapFragment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" />-->
 
     </LinearLayout>
 
