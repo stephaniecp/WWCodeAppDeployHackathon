@@ -9,7 +9,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.Status
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import steph.wwcodeappdeployhackathon.R
@@ -56,6 +62,27 @@ class HomeFragment : Fragment() {
             override fun onPlaceSelected(place: Place) {
                 // TODO: Get info about the selected place.
                 Log.i(SCPLOGTAG, "Place: ${place.name}, ${place.id}")
+
+                val placesClient = Places.createClient(requireActivity().applicationContext)
+                placesClient.fetchPlace(FetchPlaceRequest.newInstance(place.id,listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)))
+                    .addOnSuccessListener {
+                        response : FetchPlaceResponse ->
+                            val responsePlace = response.place
+                            Log.i(SCPLOGTAG, "Response Place: ${responsePlace.name}, ${responsePlace.id}, ${responsePlace.latLng}")
+
+                            val supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+                            supportMapFragment!!.getMapAsync {
+                                googleMap ->
+
+                                    val markerOptions = MarkerOptions()
+                                    markerOptions.position(responsePlace.latLng)
+                                    markerOptions.title(responsePlace.name)
+
+                                    googleMap.addMarker(markerOptions)
+                                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(responsePlace.latLng, 5f))
+
+                            }
+                    }
             }
 
             override fun onError(status: Status) {
