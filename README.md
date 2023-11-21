@@ -52,7 +52,7 @@ My Maps Too is an attempt at recreating the old Google My Maps Android app. The 
 ## Documentation used
 * [Google Places API for Android](https://developers.google.com/maps/documentation/places/android-sdk)
 * [Google Maps Api for Android](https://developers.google.com/maps/documentation/android-sdk)
-* [Kotlin official documentation](https://kotlinlang.org/docs/home.html
+* [Kotlin official documentation](https://kotlinlang.org/docs/home.html)
 * [StackOverflow](https://stackoverflow.co/)
 * [Gradle](https://docs.gradle.org/current/userguide/userguide.html)
 
